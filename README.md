@@ -55,4 +55,4 @@ The core components of the pipeline include:
 
 1. Clone the repository to your local machine:
    ```bash
-   git clone https://github.com/your-username/fraud-detection-pipeline.git
+   git clone https://github.com/omar-g-hussien/fraud-detection-pipeline.git
