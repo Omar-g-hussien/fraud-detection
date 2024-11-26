@@ -7,7 +7,6 @@ This project implements a real-time fraud detection pipeline using Apache Kafka,
 - [Overview](#overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Project Setup](#project-setup)
 - [How It Works](#how-it-works)
 - [Model Training and Prediction](#model-training-and-prediction)
 - [Contributing](#contributing)
@@ -43,16 +42,22 @@ The core components of the pipeline include:
 - **geopy**: For calculating distances between locations as a feature in the model.
 - **Random Forest Classifier**: Used as the predictive model for fraud detection.
 
-## Project Setup
+## How It Works
 
-### Prerequisites
+- **Producer**: A Kafka producer sends simulated transaction data (including features like lat, long, amt, category, transaction_id, etc.) to the Kafka topic.
+- **Consumer**: A Kafka consumer reads messages from the topic and passes the transaction data to the fraud detection pipeline.
+- **Preprocessing**: The pipeline applies data preprocessing, including feature engineering (e.g., calculating the distance between lat/long and merchant lat/long) and scaling the numerical features.
+- **Prediction**: The trained machine learning model (Random Forest Classifier) predicts whether the transaction is fraudulent (1) or not (0).
+- **Storing Results**: The prediction is stored in the MySQL database, along with the transaction ID and fraud status.
 
-1. Install **Apache Kafka** and set up a Kafka cluster.
-2. Install **MySQL** for storing the results of fraud predictions.
-3. Install Python 3.x and the required libraries.
+## Model Training and Prediction
 
-### Install Dependencies
+- **Training the Model**: The model is trained using historical transaction data. This data includes labeled information indicating whether a transaction is fraudulent or not. We use Random Forest Classifier to train the model.
 
-1. Clone the repository to your local machine:
-   ```bash
-   git clone https://github.com/omar-g-hussien/fraud-detection-pipeline.git
+- **Prediction**: After training, the model is used to predict fraud on incoming transactions, and the results are output to a MySQL database.
+
+- **SMOTE (Synthetic Minority Over-sampling Technique)**: To address class imbalance (where fraud cases are much less frequent than non-fraud cases), we use SMOTE to generate synthetic fraud cases during the model training phase.
+
+## Contributing
+
+Contributions are always welcome! If you'd like to improve this project, please feel free to open an issue or submit a pull request.
